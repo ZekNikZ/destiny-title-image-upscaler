@@ -1,12 +1,11 @@
 from pathlib import Path
 import glob
 import os
-from PIL import Image
 import requests
 import sys
 
 
-def downloadImages(clear_cache):
+def download_images(clear_cache):
     # Clear existing images
     if clear_cache:
         files = glob.glob("title-images/*.png")
@@ -128,30 +127,3 @@ def downloadImages(clear_cache):
             images_to_download,
         )
     )
-
-
-def upscaleImages(images):
-    for image in images:
-        title = image["title"]
-        tag = image["tag"]
-        input_filename = image["filename"]
-        output_filename = image["filename"].replace("title-images/", "upscaled-images/")
-
-        print("Image Upscaling")
-        print(f"  > Title: {title}")
-        print(f"  > Tag: {tag}")
-        print(f"  > Original File: {input_filename}")
-        print(f"  > Upscaled File: {output_filename}")
-    print()
-
-
-def main():
-    original_images = downloadImages(False)
-
-    upscaled_images = upscaleImages(original_images)
-
-    # vector_images = vectorizeImages(upscaled_images)
-
-
-if __name__ == "__main__":
-    main()
