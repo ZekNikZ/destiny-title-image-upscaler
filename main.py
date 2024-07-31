@@ -5,7 +5,7 @@ from image_upscaler import upscale_images
 def main():
     original_images = download_images(False)
 
-    upscaled_images = upscale_images(original_images)
+    upscaled_images = upscale_images(original_images, False)
 
     # vector_images = vectorizeImages(upscaled_images)
 

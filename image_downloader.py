@@ -5,7 +5,7 @@ import requests
 import sys
 
 
-def download_images(clear_cache):
+def download_images(clear_cache=False):
     # Clear existing images
     if clear_cache:
         files = glob.glob("title-images/*.png")
@@ -101,13 +101,21 @@ def download_images(clear_cache):
                 "image_url": f"https://bungie.net{silver_icon}",
             }
         )
+        images_to_download = list(
+            map(
+                lambda data: {
+                    **data,
+                    "filename": f"title-images/{data['title']}{data['tag']}.png",
+                },
+                images_to_download,
+            )
+        )
     print()
 
     # Download images
     for image_to_download in images_to_download:
         title = image_to_download["title"]
-        tag = image_to_download["tag"]
-        filename = f"title-images/{title}{tag}.png"
+        filename = image_to_download["filename"]
         image_url = image_to_download["image_url"]
 
         if Path(filename).exists():
@@ -122,7 +130,7 @@ def download_images(clear_cache):
             lambda data: {
                 "title": data["title"],
                 "tag": data["tag"].replace("-", ""),
-                "filename": filename,
+                "filename": data["filename"],
             },
             images_to_download,
         )
